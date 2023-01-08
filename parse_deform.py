@@ -42,13 +42,16 @@ if __name__ == '__main__':
     tf.enable_eager_execution()
 
     tf_datasetPath='tmp/datasets/deforming_plate'
-    os.makedirs('tmp/datasets_h5/', exist_ok=True)
+    os.makedirs('tmp/datasets_h5/deforming_plate_500', exist_ok=True)
 
     for split in ['train', 'test', 'valid']:
         ds = load_dataset(tf_datasetPath, split)
-        save_path='tmp/datasets_h5/'+ split  +'.h5'
+        save_path='tmp/datasets_h5/deforming_plate_500/'+ split  +'.h5'
         f = h5py.File(save_path, "w")
         print(save_path)
+        num = 0
+        for index, d in enumerate(ds):
+          num += 1
 
         for index, d in enumerate(ds):
             cells = d['cells'].numpy()
@@ -63,4 +66,6 @@ if __name__ == '__main__':
              g[k] = eval(k)
             
             print(index)
+            if index == (num // 2)-1:
+              break
         f.close()
