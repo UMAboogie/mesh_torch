@@ -24,19 +24,23 @@ Transform datasets:
 
 To use the datasets in run_model.py, you have to add targets to each trajectory snapshot. You can use add_targets.py to do so. Please change some parts in the code and run it.
 Preprocess datasets:
+
     python mesh_torch/preprocess/add_targets.py 
 
 ## Train the model
 Making a checkpoint dir, please run run_model.py with training mode.
+
     mkdir $(checkpoint)
     python -m mesh_torch.run_model --model=cloth --mode=train --checkpoint_dir=$(checkpoint) --dataset_dir=tmp/datasets_h5_pro/flag_simple_500 --load_chk=True --max_epochs=5
 
 ## Evaluate the model
 Making a rollout dir, please run run_model.py with evaluate mode.
+
     mkdir $(rollout)
     python -m mesh_torch.run_model --model=cloth --mode=eval --checkpoint_dir=$(checkpoint) --dataset_dir=tmp/datasets_h5_pro/flag_simple_500 --rollout_dir=$(rollout) --load_chk=True --num_rollouts=10
 
 ## Plot trajectory
+
     mkdir tmp/anim_gif
     python -m mesh_torch.plot_cloth --rollout_dir=$(rollout) --gif_dir=tmp/anim_gif --type=flag
 
